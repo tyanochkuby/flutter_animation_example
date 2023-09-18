@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_animations_example/presentation/widgets/boatcard.dart';
 import 'package:flutter_animations_example/presentation/widgets/homesearchbar.dart';
+import 'package:flutter_animations_example/presentation/widgets/screentitle.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../models/boattour.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = ScrollController();
-  static const double _titleHeight = 150;
+  static const double _titleHeight = 170;
   double _top = 0, _topList = _titleHeight;
   double _offsetA = 0, _offsetB = 0, _savedA = 0, _savedB = 0;
   var _tookA = false, _tookB = false, _fadeContainer = true;
@@ -28,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
         leading: const Icon(
           Icons.menu_outlined,
@@ -46,6 +49,13 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: <Widget>[
           Positioned(
+            top: _topList,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: _buildListView(),
+          ),
+          Positioned(
             top: _top,
             left: 0,
             right: 0,
@@ -53,31 +63,19 @@ class _HomePageState extends State<HomePage> {
               opacity: _fadeContainer ? 1 + (_top / _titleHeight) : 1,
               child: Container(
                 height: _titleHeight,
-                color: Colors.white,
+                color: const Color.fromARGB(210, 255, 255, 255),
                 alignment: Alignment.center,
-                child: Column(
+                child: const Column(
                   children: [
-                    Text(
-                      'Rent a boat',
-                      style: GoogleFonts.rajdhani(
-                          textStyle: const TextStyle(
-                              fontSize: 40, color: Colors.black)),
-                    ),
-                    const SizedBox(
+                    ScreenTitle(title: 'Rend a boat'),
+                    SizedBox(
                       height: 20,
                     ),
-                    const HomeSearchBar(),
+                    HomeSearchBar(),
                   ],
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: _topList,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: _buildListView(),
           ),
         ],
       ),
@@ -153,15 +151,4 @@ class _HomePageState extends State<HomePage> {
               ],
             ));
   }
-}
-
-class BoatTour {
-  BoatTour(
-      {required this.title,
-      required this.boatAssetName,
-      required this.cardColor});
-
-  String title;
-  String boatAssetName;
-  Color cardColor;
 }
