@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_animations_example/presentation/widgets/boatcard.dart';
 import 'package:flutter_animations_example/presentation/widgets/homesearchbar.dart';
 import 'package:flutter_animations_example/presentation/widgets/screentitle.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../models/boattour.dart';
 
@@ -16,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _controller = ScrollController();
-  static const double _titleHeight = 170;
+  static const double _titleHeight = 177;
   double _top = 0, _topList = _titleHeight;
   double _offsetA = 0, _offsetB = 0, _savedA = 0, _savedB = 0;
   var _tookA = false, _tookB = false, _fadeContainer = true;
@@ -120,7 +119,7 @@ class _HomePageState extends State<HomePage> {
     List<BoatTour> boatTours = [
       BoatTour(
           title: 'Lifetime Youth',
-          boatAssetName: 'redBoat',
+          boatAssetName: 'lib/assets/redBoat.png',
           cardColor: const Color.fromARGB(255, 65, 86, 245)),
       BoatTour(
           title: 'Sunny Island',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animations_example/presentation/homepage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/boattour.dart';
@@ -29,21 +28,25 @@ class BoatCard extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Container(
-                height: MediaQuery.of(context).size.width * 0.36,
-                decoration: BoxDecoration(
-                    color: boatTour.cardColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.06,
-                      bottom: MediaQuery.of(context).size.width * 0.03),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      boatTour.title,
-                      style:
-                          GoogleFonts.mulish(color: Colors.white, fontSize: 20),
+              child: Hero(
+                tag: '${boatTour.title}-tour-container',
+                child: Container(
+                  height: MediaQuery.of(context).size.width * 0.36,
+                  decoration: BoxDecoration(
+                      color: boatTour.cardColor,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.06,
+                        bottom: MediaQuery.of(context).size.width * 0.03),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        boatTour.title,
+                        style: GoogleFonts.mulish(
+                            color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
                 ),
@@ -53,9 +56,12 @@ class BoatCard extends StatelessWidget {
           Padding(
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.35),
-            child: Image.asset(
-              boatTour.boatAssetName,
-              width: MediaQuery.of(context).size.width * 0.4,
+            child: Hero(
+              tag: boatTour.boatAssetName,
+              child: Image.asset(
+                boatTour.boatAssetName,
+                width: MediaQuery.of(context).size.width * 0.4,
+              ),
             ),
           )
         ],
