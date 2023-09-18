@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_animations_example/presentation/widgets/boatcard.dart';
 import 'package:flutter_animations_example/presentation/widgets/homesearchbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -118,11 +119,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildListView() {
+    List<BoatTour> boatTours = [
+      BoatTour(title: 'Lifetime Youth', boatAssetName: 'redBoat'),
+      BoatTour(title: 'Sunny Island', boatAssetName: 'yellowBoat'),
+      BoatTour(title: 'Pelican Athena', boatAssetName: 'pinkBoat')
+    ];
+
     return ListView.builder(
-      controller: _controller,
-      padding: EdgeInsets.only(bottom: _titleHeight + 16),
-      itemCount: 16,
-      itemBuilder: (_, i) => ListTile(title: Text("Item $i")),
-    );
+        controller: _controller,
+        padding: const EdgeInsets.only(bottom: _titleHeight + 16),
+        itemCount: boatTours.length,
+        itemBuilder: (_, i) => BoatCard(
+            title: boatTours.elementAt(i).title,
+            boatAssetName: boatTours.elementAt(i).boatAssetName));
   }
+}
+
+class BoatTour {
+  BoatTour({required this.title, required this.boatAssetName});
+
+  String title;
+  String boatAssetName;
 }
