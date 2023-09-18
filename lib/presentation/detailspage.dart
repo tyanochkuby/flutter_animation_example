@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_example/presentation/homepage.dart';
 
+import '../models/boattour.dart';
+
 // ignore: must_be_immutable
 class TourDetailsPage extends StatelessWidget {
   TourDetailsPage({super.key, required this.boatTour});

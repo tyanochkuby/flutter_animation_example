@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animations_example/presentation/homepage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../models/boattour.dart';
 import '../detailspage.dart';
 
 class BoatCard extends StatelessWidget {
