@@ -120,24 +120,48 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildListView() {
     List<BoatTour> boatTours = [
-      BoatTour(title: 'Lifetime Youth', boatAssetName: 'redBoat'),
-      BoatTour(title: 'Sunny Island', boatAssetName: 'yellowBoat'),
-      BoatTour(title: 'Pelican Athena', boatAssetName: 'pinkBoat')
+      BoatTour(
+          title: 'Lifetime Youth',
+          boatAssetName: 'redBoat',
+          cardColor: const Color.fromARGB(255, 65, 86, 245)),
+      BoatTour(
+          title: 'Sunny Island',
+          boatAssetName: 'yellowBoat',
+          cardColor: const Color.fromARGB(255, 255, 171, 215)),
+      BoatTour(
+          title: 'Pelican Athena',
+          boatAssetName: 'pinkBoat',
+          cardColor: Color.fromARGB(255, 106, 215, 232)),
+      BoatTour(
+          title: 'Paliokastritsa',
+          boatAssetName: 'redBoat',
+          cardColor: Color.fromARGB(255, 85, 222, 12))
     ];
 
     return ListView.builder(
         controller: _controller,
         padding: const EdgeInsets.only(bottom: _titleHeight + 16),
         itemCount: boatTours.length,
-        itemBuilder: (_, i) => BoatCard(
-            title: boatTours.elementAt(i).title,
-            boatAssetName: boatTours.elementAt(i).boatAssetName));
+        itemBuilder: (_, i) => Column(
+              children: [
+                BoatCard(
+                  boatTour: boatTours.elementAt(i),
+                ),
+                const SizedBox(
+                  height: 20,
+                )
+              ],
+            ));
   }
 }
 
 class BoatTour {
-  BoatTour({required this.title, required this.boatAssetName});
+  BoatTour(
+      {required this.title,
+      required this.boatAssetName,
+      required this.cardColor});
 
   String title;
   String boatAssetName;
+  Color cardColor;
 }

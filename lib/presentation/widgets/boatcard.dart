@@ -1,35 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animations_example/presentation/homepage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BoatCard extends StatelessWidget {
-  const BoatCard({super.key, required this.title, required this.boatAssetName});
+import '../detailspage.dart';
 
-  final String title;
-  final String boatAssetName;
+class BoatCard extends StatelessWidget {
+  const BoatCard({super.key, required this.boatTour});
+
+  final BoatTour boatTour;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 6,
-      width: MediaQuery.of(context).size.width * 0.8,
+      //height: MediaQuery.of(context).size.height / 6,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: Stack(
         children: [
           Padding(
             padding:
                 EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.1),
-            child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.08,
-                    bottom: MediaQuery.of(context).size.width * 0.1),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    title,
-                    style:
-                        GoogleFonts.mulish(color: Colors.white, fontSize: 20),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TourDetailsPage(
+                    boatTour: boatTour,
+                  ),
+                ),
+              ),
+              child: Container(
+                height: MediaQuery.of(context).size.width * 0.36,
+                decoration: BoxDecoration(
+                    color: boatTour.cardColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.06,
+                      bottom: MediaQuery.of(context).size.width * 0.03),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      boatTour.title,
+                      style:
+                          GoogleFonts.mulish(color: Colors.white, fontSize: 20),
+                    ),
                   ),
                 ),
               ),
@@ -38,7 +52,10 @@ class BoatCard extends StatelessWidget {
           Padding(
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.35),
-            child: Image.asset(boatAssetName),
+            child: Image.asset(
+              boatTour.boatAssetName,
+              width: MediaQuery.of(context).size.width * 0.4,
+            ),
           )
         ],
       ),
