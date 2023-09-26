@@ -14,16 +14,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _controller = ScrollController();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  List<BoatCard> boatCards = [];
+
+  final scrollController = ScrollController();
   static const double _titleHeight = 177;
   double _top = 0, _topList = _titleHeight;
   double _offsetA = 0, _offsetB = 0, _savedA = 0, _savedB = 0;
-  var _tookA = false, _tookB = false, _fadeContainer = true;
+  var _tookA = false, _tookB = false, _fadeContainer = true, boatsAdded = false;
+  Tween<Offset> offset =
+      Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0));
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(listener);
+    scrollController.addListener(listener);
+    WidgetsBinding.instance.addPersistentFrameCallback(
+      (timeStamp) {
+        addBoatCards();
+      },
+    );
   }
 
   @override
@@ -52,7 +62,22 @@ class _HomePageState extends State<HomePage> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: _buildListView(),
+            child: AnimatedList(
+                key: _listKey,
+                controller: scrollController,
+                padding: const EdgeInsets.only(bottom: _titleHeight + 16),
+                initialItemCount: boatCards.length,
+                itemBuilder: (_, i, animation) => SlideTransition(
+                      position: animation.drive(offset),
+                      child: Column(
+                        children: [
+                          boatCards.elementAt(i),
+                          const SizedBox(
+                            height: 20,
+                          )
+                        ],
+                      ),
+                    )),
           ),
           Positioned(
             top: _top,
@@ -82,12 +107,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void listener() {
-    double offset = _controller.offset;
+    double offset = scrollController.offset;
 
     _topList = _titleHeight - offset;
     if (_topList < 0) _topList = 0;
 
-    if (_controller.position.userScrollDirection == ScrollDirection.reverse) {
+    if (scrollController.position.userScrollDirection ==
+        ScrollDirection.reverse) {
       _tookB = false;
       if (!_tookA) {
         _tookA = true;
@@ -98,7 +124,7 @@ class _HomePageState extends State<HomePage> {
       _top = _savedB - difference;
       if (_top <= -_titleHeight) _top = -_titleHeight;
       _savedA = _top;
-    } else if (_controller.position.userScrollDirection ==
+    } else if (scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
       _tookA = false;
       if (!_tookB) {
@@ -115,39 +141,33 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  Widget _buildListView() {
-    List<BoatTour> boatTours = [
-      BoatTour(
-          title: 'Lifetime Youth',
-          boatAssetName: 'lib/assets/redBoat.png',
-          cardColor: const Color.fromARGB(255, 65, 86, 245)),
-      BoatTour(
-          title: 'Sunny Island',
-          boatAssetName: 'yellowBoat',
-          cardColor: const Color.fromARGB(255, 255, 171, 215)),
-      BoatTour(
-          title: 'Pelican Athena',
-          boatAssetName: 'pinkBoat',
-          cardColor: Color.fromARGB(255, 106, 215, 232)),
-      BoatTour(
-          title: 'Paliokastritsa',
-          boatAssetName: 'redBoat',
-          cardColor: Color.fromARGB(255, 85, 222, 12))
-    ];
+  void addBoatCards() async {
+    if (!boatsAdded) {
+      List<BoatTour> boatTours = [
+        BoatTour(
+            title: 'Lifetime Youth',
+            boatAssetName: 'lib/assets/redBoat.png',
+            cardColor: const Color.fromARGB(255, 65, 86, 245)),
+        BoatTour(
+            title: 'Sunny Island',
+            boatAssetName: 'yellowBoat',
+            cardColor: const Color.fromARGB(255, 255, 171, 215)),
+        BoatTour(
+            title: 'Pelican Athena',
+            boatAssetName: 'pinkBoat',
+            cardColor: Color.fromARGB(255, 106, 215, 232)),
+        BoatTour(
+            title: 'Paliokastritsa',
+            boatAssetName: 'redBoat',
+            cardColor: Color.fromARGB(255, 85, 222, 12))
+      ];
 
-    return ListView.builder(
-        controller: _controller,
-        padding: const EdgeInsets.only(bottom: _titleHeight + 16),
-        itemCount: boatTours.length,
-        itemBuilder: (_, i) => Column(
-              children: [
-                BoatCard(
-                  boatTour: boatTours.elementAt(i),
-                ),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
-            ));
+      for (var boatTour in boatTours) {
+        boatCards.add(BoatCard(boatTour: boatTour));
+        _listKey.currentState?.insertItem(boatCards.length - 1);
+        // await Future.delayed(const Duration(milliseconds: 200));
+      }
+      boatsAdded = true;
+    }
   }
 }
