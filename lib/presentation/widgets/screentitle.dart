@@ -9,6 +9,7 @@ class ScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
+        curve: Curves.easeInOutCubic,
         tween: Tween<double>(begin: 0, end: 1),
         duration: const Duration(milliseconds: 700),
         builder: (context, tweenValue, child) {
