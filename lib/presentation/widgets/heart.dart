@@ -10,9 +10,9 @@ class HeartWidget extends StatefulWidget {
 class _HeartWidgetState extends State<HeartWidget>
     with TickerProviderStateMixin {
   late AnimationController controller;
-  late Animation<Color?> heartColorAnimation;
-
-  late Animation<double> heartSizeAnimation;
+  late Animation heartColorAnimation;
+  late Animation<double> curveAnimation;
+  late Animation heartSizeAnimation;
 
   bool isFav = false;
 
@@ -21,15 +21,18 @@ class _HeartWidgetState extends State<HeartWidget>
     super.initState();
 
     controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
+
+    curveAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.slowMiddle);
 
     heartColorAnimation =
-        ColorTween(begin: Colors.grey, end: Colors.red).animate(controller);
+        ColorTween(begin: Colors.grey, end: Colors.red).animate(curveAnimation);
 
     heartSizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
       TweenSequenceItem(tween: Tween(begin: 35, end: 50), weight: 50),
       TweenSequenceItem(tween: Tween(begin: 50, end: 35), weight: 50),
-    ]).animate(controller);
+    ]).animate(curveAnimation);
 
     controller.addListener(() {
       print(heartColorAnimation.value);
