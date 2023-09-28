@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     scrollController.addListener(listener);
-    WidgetsBinding.instance.addPersistentFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         addBoatCards();
       },
@@ -71,7 +71,11 @@ class _HomePageState extends State<HomePage> {
                       position: animation.drive(offset),
                       child: Column(
                         children: [
-                          boatCards.elementAt(i),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  top:
+                                      MediaQuery.of(context).size.width * 0.15),
+                              child: boatCards.elementAt(i)),
                           const SizedBox(
                             height: 20,
                           )
@@ -91,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.center,
                 child: const Column(
                   children: [
-                    ScreenTitle(title: 'Rend a boat'),
+                    ScreenTitle(title: 'Rent a boat'),
                     SizedBox(
                       height: 20,
                     ),
@@ -150,15 +154,15 @@ class _HomePageState extends State<HomePage> {
             cardColor: const Color.fromARGB(255, 65, 86, 245)),
         BoatTour(
             title: 'Sunny Island',
-            boatAssetName: 'yellowBoat',
+            boatAssetName: 'lib/assets/redBoat.png',
             cardColor: const Color.fromARGB(255, 255, 171, 215)),
         BoatTour(
             title: 'Pelican Athena',
-            boatAssetName: 'pinkBoat',
+            boatAssetName: 'lib/assets/redBoat.png',
             cardColor: Color.fromARGB(255, 106, 215, 232)),
         BoatTour(
             title: 'Paliokastritsa',
-            boatAssetName: 'redBoat',
+            boatAssetName: 'lib/assets/redBoat.png',
             cardColor: Color.fromARGB(255, 85, 222, 12))
       ];
 
