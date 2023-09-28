@@ -73,8 +73,10 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Padding(
                               padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.width * 0.15),
+                                  top: i == 0
+                                      ? MediaQuery.of(context).size.width * 0.10
+                                      : MediaQuery.of(context).size.width *
+                                          0.05),
                               child: boatCards.elementAt(i)),
                           const SizedBox(
                             height: 20,
@@ -145,6 +147,8 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  Future ft = Future(() {});
+
   void addBoatCards() async {
     if (!boatsAdded) {
       List<BoatTour> boatTours = [
@@ -167,8 +171,13 @@ class _HomePageState extends State<HomePage> {
       ];
 
       for (var boatTour in boatTours) {
-        boatCards.add(BoatCard(boatTour: boatTour));
-        _listKey.currentState?.insertItem(boatCards.length - 1);
+        ft = ft.then((_) {
+          return Future.delayed(const Duration(milliseconds: 150), () {
+            boatCards.add(BoatCard(boatTour: boatTour));
+            _listKey.currentState?.insertItem(boatCards.length - 1);
+          });
+        });
+
         // await Future.delayed(const Duration(milliseconds: 200));
       }
       boatsAdded = true;
