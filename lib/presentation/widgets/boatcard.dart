@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
 
 import '../../models/boattour.dart';
 import '../detailspage.dart';
@@ -54,15 +55,16 @@ class BoatCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.35),
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.22,
+                top: MediaQuery.of(context).size.width * 0.05),
             child: Hero(
               tag: boatTour.boatAssetName,
               child: Transform.rotate(
-                angle: 0,
+                angle: pi / 4.5,
                 child: Image.asset(
                   boatTour.boatAssetName,
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: MediaQuery.of(context).size.width * 0.6,
                 ),
               ),
             ),

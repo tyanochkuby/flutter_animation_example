@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_example/presentation/widgets/heart.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,13 +51,21 @@ class TourDetailsPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: Hero(
-                tag: boatTour.boatAssetName,
-                child: Transform.rotate(
-                  angle: 1.22,
-                  child: Image.asset('lib/assets/redBoat.png'),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.width * 0.4),
+                child: Hero(
+                  tag: boatTour.boatAssetName,
+                  child: Transform.rotate(
+                    alignment: Alignment.center,
+                    angle: pi / 2,
+                    child: Image.asset(
+                      'lib/assets/redBoat.png',
+                      width: MediaQuery.of(context).size.width * 2,
+                    ),
+                  ),
                 ),
               ),
             ),
