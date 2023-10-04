@@ -68,7 +68,8 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(bottom: _titleHeight + 16),
                 initialItemCount: boatCards.length,
                 itemBuilder: (_, i, animation) => SlideTransition(
-                      position: animation.drive(offset),
+                      position: offset.animate(CurvedAnimation(
+                          parent: animation, curve: Curves.easeOutCubic)),
                       child: Column(
                         children: [
                           Padding(
