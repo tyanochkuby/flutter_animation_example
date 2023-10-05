@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<BoatCard> boatCards = [];
+  List<GlobalKey> assetKeys = [];
 
   final scrollController = ScrollController();
   static const double _titleHeight = 177;
@@ -174,7 +175,11 @@ class _HomePageState extends State<HomePage> {
       for (var boatTour in boatTours) {
         ft = ft.then((_) {
           return Future.delayed(const Duration(milliseconds: 150), () {
-            boatCards.add(BoatCard(boatTour: boatTour));
+            assetKeys.add(GlobalKey());
+            boatCards.add(BoatCard(
+              boatTour: boatTour,
+              assetKey: assetKeys.last,
+            ));
             _listKey.currentState?.insertItem(boatCards.length - 1);
           });
         });
