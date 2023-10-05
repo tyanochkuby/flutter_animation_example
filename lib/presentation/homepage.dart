@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_animations_example/presentation/userpage.dart';
 import 'package:flutter_animations_example/presentation/widgets/boatcard.dart';
 import 'package:flutter_animations_example/presentation/widgets/homesearchbar.dart';
 import 'package:flutter_animations_example/presentation/widgets/screentitle.dart';
 
 import '../models/boattour.dart';
+import 'authentication/loginpage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,7 +52,16 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                final userStatus = FirebaseAuth.instance.currentUser;
+                if (userStatus != null) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserPage()));
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                }
+              },
               icon: const Icon(
                 Icons.person_2_outlined,
                 color: Colors.black,
