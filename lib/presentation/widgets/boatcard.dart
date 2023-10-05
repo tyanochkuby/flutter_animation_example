@@ -6,14 +6,14 @@ import '../../models/boattour.dart';
 import '../detailspage.dart';
 
 class BoatCard extends StatelessWidget {
-  const BoatCard({super.key, required this.boatTour});
+  const BoatCard({super.key, required this.boatTour, required this.assetKey});
 
   final BoatTour boatTour;
+  final GlobalKey assetKey;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width * 0.85,
       child: Stack(
         children: [
@@ -24,13 +24,11 @@ class BoatCard extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TourDetailsPage(
-                    boatTour: boatTour,
-                  ),
-                ),
+                    builder: (context) => TourDetailsPage(boatTour: boatTour)),
               ),
               child: Hero(
                 tag: '${boatTour.title}-tour-container',
+                transitionOnUserGestures: true,
                 child: Container(
                   height: MediaQuery.of(context).size.width * 0.36,
                   decoration: BoxDecoration(
@@ -59,7 +57,27 @@ class BoatCard extends StatelessWidget {
                 left: MediaQuery.of(context).size.width * 0.22,
                 top: MediaQuery.of(context).size.width * 0.05),
             child: Hero(
-              tag: boatTour.boatAssetName,
+              tag: '${boatTour.boatAssetName}-${boatTour.title}',
+              transitionOnUserGestures: true,
+              flightShuttleBuilder:
+                  (_, Animation<double> animation, __, ___, ____) {
+                final customAnimation = Tween<double>(begin: 0, end: 1).animate(
+                    CurvedAnimation(
+                        parent: animation, curve: Curves.easeInOutCubic));
+                return AnimatedBuilder(
+                    animation: customAnimation,
+                    builder: (context, child) {
+                      return Transform.rotate(
+                        angle:
+                            (pi / 4.5 + (customAnimation.value * 2.5 * pi / 9)),
+                        child: Image.asset(
+                          boatTour.boatAssetName,
+                          width: MediaQuery.of(context).size.width * 0.6 +
+                              1.4 * customAnimation.value,
+                        ),
+                      );
+                    });
+              },
               child: Transform.rotate(
                 angle: pi / 4.5,
                 child: Image.asset(

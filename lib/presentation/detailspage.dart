@@ -10,7 +10,7 @@ import '../models/boattour.dart';
 class TourDetailsPage extends StatelessWidget {
   TourDetailsPage({super.key, required this.boatTour});
 
-  BoatTour boatTour;
+  final BoatTour boatTour;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class TourDetailsPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Hero(
                 tag: '${boatTour.title}-tour-container',
+                transitionOnUserGestures: true,
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.75,
                   decoration: BoxDecoration(
@@ -43,7 +44,7 @@ class TourDetailsPage extends StatelessWidget {
                             style: GoogleFonts.mulish(
                                 color: Colors.white, fontSize: 40),
                           ),
-                          HeartWidget(),
+                          const HeartWidget(),
                         ],
                       ),
                     ),
@@ -57,7 +58,8 @@ class TourDetailsPage extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.width * 0.4),
                 child: Hero(
-                  tag: boatTour.boatAssetName,
+                  tag: '${boatTour.boatAssetName}-${boatTour.title}',
+                  transitionOnUserGestures: true,
                   child: Transform.rotate(
                     alignment: Alignment.center,
                     angle: pi / 2,
