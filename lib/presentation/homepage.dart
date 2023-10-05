@@ -46,26 +46,61 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 0,
-        leading: const Icon(
-          Icons.menu_outlined,
-          color: Colors.black,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: const BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.menu_outlined,
+                  color: Colors.black,
+                )),
+          ),
         ),
         actions: [
-          IconButton(
-              onPressed: () async {
-                final userStatus = FirebaseAuth.instance.currentUser;
-                if (userStatus != null) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserPage()));
-                } else {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                }
-              },
-              icon: const Icon(
-                Icons.person_2_outlined,
-                color: Colors.black,
-              ))
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Hero(
+              tag: 'user-icon',
+              transitionOnUserGestures: true,
+              child: Container(
+                height: 45,
+                width: 45,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: IconButton(
+                      onPressed: () async {
+                        final userStatus = FirebaseAuth.instance.currentUser;
+                        if (userStatus != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserPage()));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.person_2_outlined,
+                        color: Colors.black,
+                      )),
+                ),
+              ),
+            ),
+          )
         ],
       ),
       body: Stack(
