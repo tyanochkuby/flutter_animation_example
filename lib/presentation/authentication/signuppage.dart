@@ -6,14 +6,14 @@ import 'package:flutter_animations_example/main.dart';
 import '../widgets/screentitle.dart';
 import '../widgets/textformfieldboatbound.dart';
 
-class SighUpPage extends StatefulWidget {
-  SighUpPage({super.key});
+class SignUpPage extends StatefulWidget {
+  SignUpPage({super.key});
 
   @override
-  State<SighUpPage> createState() => _SighUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SighUpPageState extends State<SighUpPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = TextEditingController();
