@@ -10,7 +10,7 @@ import '../models/boattour.dart';
 class TourDetailsPage extends StatelessWidget {
   TourDetailsPage({super.key, required this.boatTour});
 
-  final BoatTour boatTour;
+  final BoatTrip boatTour;
 
   @override
   Widget build(BuildContext context) {

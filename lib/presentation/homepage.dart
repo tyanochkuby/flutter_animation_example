@@ -200,20 +200,20 @@ class _HomePageState extends State<HomePage> {
 
   void addBoatCards() async {
     if (!boatsAdded) {
-      List<BoatTour> boatTours = [
-        BoatTour(
+      List<BoatTrip> boatTours = [
+        BoatTrip(
             title: 'Lifetime Youth',
             boatAssetName: 'lib/assets/redBoat.png',
             cardColor: const Color.fromARGB(255, 65, 86, 245)),
-        BoatTour(
+        BoatTrip(
             title: 'Sunny Island',
             boatAssetName: 'lib/assets/redBoat.png',
             cardColor: const Color.fromARGB(255, 255, 171, 215)),
-        BoatTour(
+        BoatTrip(
             title: 'Pelican Athena',
             boatAssetName: 'lib/assets/redBoat.png',
             cardColor: Color.fromARGB(255, 106, 215, 232)),
-        BoatTour(
+        BoatTrip(
             title: 'Paliokastritsa',
             boatAssetName: 'lib/assets/redBoat.png',
             cardColor: Color.fromARGB(255, 85, 222, 12))

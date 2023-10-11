@@ -8,7 +8,7 @@ import '../detailspage.dart';
 class BoatCard extends StatelessWidget {
   const BoatCard({super.key, required this.boatTour, required this.assetKey});
 
-  final BoatTour boatTour;
+  final BoatTrip boatTour;
   final GlobalKey assetKey;
 
   @override
