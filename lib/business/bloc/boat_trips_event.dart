@@ -9,3 +9,12 @@ sealed class BoatTripsEvent extends Equatable {
 class GetData extends BoatTripsEvent {
   GetData();
 }
+
+class RefreshScrollController extends BoatTripsEvent {
+  RefreshScrollController();
+}
+
+class BoatCardAdded extends BoatTripsEvent {
+  final BoatCard boatCard;
+  BoatCardAdded(this.boatCard);
+}

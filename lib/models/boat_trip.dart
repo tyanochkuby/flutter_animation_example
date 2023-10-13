@@ -13,7 +13,7 @@ class BoatTrip {
   factory BoatTrip.fromJson(Map<String, dynamic> json) {
     return BoatTrip(
         title: json['title'],
-        cardColor: json['color'],
-        boatAssetName: json['assetName']);
+        cardColor: Color(int.parse(json['color'])).withOpacity(1),
+        boatAssetName: 'lib/assets/${json['assetName']}.png');
   }
 }

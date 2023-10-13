@@ -5,8 +5,10 @@ import 'package:flutter_animations_example/presentation/userpage.dart';
 import 'package:flutter_animations_example/presentation/widgets/boatcard.dart';
 import 'package:flutter_animations_example/presentation/widgets/homesearchbar.dart';
 import 'package:flutter_animations_example/presentation/widgets/screentitle.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/boattour.dart';
+import '../business/bloc/boat_trips_bloc.dart';
+import '../models/boat_trip.dart';
 import 'authentication/loginpage.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,9 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  List<BoatCard> boatCards = [];
-  List<GlobalKey> assetKeys = [];
+  //final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   final scrollController = ScrollController();
   static const double _titleHeight = 177;
@@ -32,10 +32,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(listener);
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        addBoatCards();
+        scrollController.addListener(listener);
       },
     );
   }
@@ -103,60 +102,91 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: _topList,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: AnimatedList(
-                key: _listKey,
-                controller: scrollController,
-                padding: const EdgeInsets.only(bottom: _titleHeight + 16),
-                initialItemCount: boatCards.length,
-                itemBuilder: (_, i, animation) => SlideTransition(
-                      position: offset.animate(CurvedAnimation(
-                          parent: animation, curve: Curves.easeOutCubic)),
-                      child: Column(
+      body: BlocBuilder<BoatTripsBloc, BoatTripsState>(
+        builder: (context, state) {
+          if (state is BoatTripsInitial) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is BoatTripsLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is BoatTripsError) {
+            print('Error: ${state.error}');
+            // showDialog(
+            //     context: context,
+            //     builder: ((context) => AlertDialog(
+            //           title: Text('Error'),
+            //           content: Text(state.error),
+            //         )));
+          }
+          if (state is BoatTripsLoaded) {
+            if (!boatsAdded) {
+              addBoatCards();
+            }
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                  top: _topList,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: AnimatedList(
+                      key: context.read<BoatTripsBloc>().state.listKey,
+                      controller: scrollController,
+                      padding: const EdgeInsets.only(bottom: _titleHeight + 16),
+                      initialItemCount: state.boatCards.length,
+                      itemBuilder: (_, i, animation) => SlideTransition(
+                            position: offset.animate(CurvedAnimation(
+                                parent: animation, curve: Curves.easeOutCubic)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.only(
+                                        top: i == 0
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.10
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.05),
+                                    child: state.boatCards.elementAt(i)),
+                                const SizedBox(
+                                  height: 20,
+                                )
+                              ],
+                            ),
+                          )),
+                ),
+                Positioned(
+                  top: _top,
+                  left: 0,
+                  right: 0,
+                  child: Opacity(
+                    opacity: _fadeContainer ? 1 + (_top / _titleHeight) : 1,
+                    child: Container(
+                      height: _titleHeight,
+                      color: const Color.fromARGB(210, 255, 255, 255),
+                      alignment: Alignment.center,
+                      child: const Column(
                         children: [
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  top: i == 0
-                                      ? MediaQuery.of(context).size.width * 0.10
-                                      : MediaQuery.of(context).size.width *
-                                          0.05),
-                              child: boatCards.elementAt(i)),
-                          const SizedBox(
+                          ScreenTitle(title: 'Rent a boat'),
+                          SizedBox(
                             height: 20,
-                          )
+                          ),
+                          HomeSearchBar(),
                         ],
                       ),
-                    )),
-          ),
-          Positioned(
-            top: _top,
-            left: 0,
-            right: 0,
-            child: Opacity(
-              opacity: _fadeContainer ? 1 + (_top / _titleHeight) : 1,
-              child: Container(
-                height: _titleHeight,
-                color: const Color.fromARGB(210, 255, 255, 255),
-                alignment: Alignment.center,
-                child: const Column(
-                  children: [
-                    ScreenTitle(title: 'Rent a boat'),
-                    SizedBox(
-                      height: 20,
                     ),
-                    HomeSearchBar(),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ],
+              ],
+            );
+          } else {
+            return const Center(child: Text('Unknown BLOC state'));
+          }
+        },
       ),
     );
   }
@@ -193,47 +223,26 @@ class _HomePageState extends State<HomePage> {
       _savedB = _top;
     }
 
-    setState(() {});
+    BlocProvider.of<BoatTripsBloc>(context).add(RefreshScrollController());
   }
 
   Future ft = Future(() {});
 
   void addBoatCards() async {
-    if (!boatsAdded) {
-      List<BoatTrip> boatTours = [
-        BoatTrip(
-            title: 'Lifetime Youth',
-            boatAssetName: 'lib/assets/redBoat.png',
-            cardColor: const Color.fromARGB(255, 65, 86, 245)),
-        BoatTrip(
-            title: 'Sunny Island',
-            boatAssetName: 'lib/assets/redBoat.png',
-            cardColor: const Color.fromARGB(255, 255, 171, 215)),
-        BoatTrip(
-            title: 'Pelican Athena',
-            boatAssetName: 'lib/assets/redBoat.png',
-            cardColor: Color.fromARGB(255, 106, 215, 232)),
-        BoatTrip(
-            title: 'Paliokastritsa',
-            boatAssetName: 'lib/assets/redBoat.png',
-            cardColor: Color.fromARGB(255, 85, 222, 12))
-      ];
+    List<BoatTrip> boatTrips = context.read<BoatTripsBloc>().state.boatTrips;
 
-      for (var boatTour in boatTours) {
-        ft = ft.then((_) {
-          return Future.delayed(const Duration(milliseconds: 150), () {
-            assetKeys.add(GlobalKey());
-            boatCards.add(BoatCard(
-              boatTour: boatTour,
-              assetKey: assetKeys.last,
-            ));
-            _listKey.currentState?.insertItem(boatCards.length - 1);
-          });
+    for (var boatTour in boatTrips) {
+      ft = ft.then((_) {
+        return Future.delayed(const Duration(milliseconds: 150), () {
+          //boatCards.add(BoatCard(boatTour: boatTour));
+          BlocProvider.of<BoatTripsBloc>(context)
+              .add(BoatCardAdded(BoatCard(boatTour: boatTour)));
+          //_listKey.currentState?.insertItem(boatCards.length - 1);
         });
+      });
 
-        // await Future.delayed(const Duration(milliseconds: 200));
-      }
-      boatsAdded = true;
+      // await Future.delayed(const Duration(milliseconds: 200));
     }
+    boatsAdded = true;
   }
 }

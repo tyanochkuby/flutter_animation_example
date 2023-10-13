@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-import '../../models/boattour.dart';
+import '../../models/boat_trip.dart';
 import '../detailspage.dart';
 
 class BoatCard extends StatelessWidget {
-  const BoatCard({super.key, required this.boatTour, required this.assetKey});
+  const BoatCard({super.key, required this.boatTour});
 
   final BoatTrip boatTour;
-  final GlobalKey assetKey;
 
   @override
   Widget build(BuildContext context) {

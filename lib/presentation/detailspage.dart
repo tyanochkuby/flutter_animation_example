@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animations_example/presentation/widgets/heart.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../models/boattour.dart';
+import '../models/boat_trip.dart';
 
 // ignore: must_be_immutable
 class TourDetailsPage extends StatelessWidget {
