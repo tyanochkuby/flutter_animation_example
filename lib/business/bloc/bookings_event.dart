@@ -6,3 +6,14 @@ sealed class BookingsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class BookingsEventLoad extends BookingsEvent {}
+
+class BookingsEventAdd extends BookingsEvent {
+  const BookingsEventAdd({required this.booking});
+
+  final Booking booking;
+
+  @override
+  List<Object> get props => [booking];
+}

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 class SelectQuantityPill extends StatefulWidget {
-  const SelectQuantityPill({super.key});
+  const SelectQuantityPill({super.key, this.minValue = 0, this.maxValue = 10});
+
+  final int minValue;
+  final int maxValue;
 
   @override
   State<SelectQuantityPill> createState() => _SelectQuantityPillState();
 }
 
 class _SelectQuantityPillState extends State<SelectQuantityPill> {
-  static const Color buttonBackgroundColor = Color.fromRGBO(15, 77, 129, 1);
+  static const Color buttonBackgroundColor = Color.fromRGBO(15, 77, 129, 0.8);
   int i = 0;
 
   @override
@@ -20,7 +23,13 @@ class _SelectQuantityPillState extends State<SelectQuantityPill> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: () => i > 0 ? setState(() => i--) : null,
+            onTap: () {
+              setState(() {
+                if (i > widget.minValue) {
+                  i--;
+                }
+              });
+            },
             child: Container(
               width: 40,
               height: 40,
@@ -39,17 +48,23 @@ class _SelectQuantityPillState extends State<SelectQuantityPill> {
             width: 40,
             height: 40,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Colors.white70,
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                '1',
-                style: TextStyle(color: Colors.black),
+                i.toString(),
+                style: const TextStyle(fontSize: 22, color: Colors.black),
               ),
             ),
           ),
           GestureDetector(
-            onTap: () => setState(() => i++),
+            onTap: () {
+              setState(() {
+                if (i < widget.maxValue) {
+                  i++;
+                }
+              });
+            },
             child: Container(
               width: 40,
               height: 40,

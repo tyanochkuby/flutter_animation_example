@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animations_example/presentation/widgets/heart.dart';
+import 'package:flutter_animations_example/presentation/widgets/primary_button.dart';
 import 'package:flutter_animations_example/presentation/widgets/select_quantity_pill.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,28 +37,37 @@ class TourDetailsPage extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height * 0.1),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  boatTour.title,
-                                  style: GoogleFonts.mulish(
-                                      color: Colors.white, fontSize: 40),
-                                ),
-                                const HeartWidget(),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const SelectQuantityPill(),
-                          ],
+                      child: Expanded(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.25,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    boatTour.title,
+                                    style: GoogleFonts.mulish(
+                                        color: Colors.white, fontSize: 40),
+                                  ),
+                                  const HeartWidget(),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const SelectQuantityPill(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              PrimaryButton(
+                                text: 'Book Now',
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
