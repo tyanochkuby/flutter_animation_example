@@ -7,7 +7,7 @@ sealed class BookingsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class BookingsEventLoad extends BookingsEvent {}
+class BookingsEventGet extends BookingsEvent {}
 
 class BookingsEventAdd extends BookingsEvent {
   const BookingsEventAdd({required this.booking});

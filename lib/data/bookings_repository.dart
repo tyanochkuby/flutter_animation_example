@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_animations_example/models/boat_trip.dart';
-
 import '../models/booking.dart';
 
 class BookingsRepository {
@@ -32,20 +29,23 @@ class BookingsRepository {
     }
   }
 
-  Future<List<BoatTrip>> get() async {
-    List<BoatTrip> tripsList = [];
+  Future<List<Booking>> get() async {
+    List<Booking> tripsList = [];
     try {
       final trips =
           await FirebaseFirestore.instance.collection('trips_available').get();
 
       trips.docs.forEach((trip) {
-        tripsList.add(BoatTrip.fromJson(trip.data()));
+        tripsList.add(Booking.fromMap(trip.data()));
       });
 
       return tripsList;
+    } on FirebaseAuthException catch (e) {
+      print('Auth issue ${e.message}');
+      return [];
     } on FirebaseException catch (e) {
-      print('Geting failed with error ${e.message}');
-      return tripsList;
+      print('Trip adding failed with error ${e.message}');
+      return [];
     } catch (e) {
       throw Exception(e.toString());
     }
