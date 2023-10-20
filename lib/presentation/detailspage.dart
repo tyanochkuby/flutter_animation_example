@@ -12,9 +12,9 @@ import '../models/boat_trip.dart';
 
 // ignore: must_be_immutable
 class TourDetailsPage extends StatelessWidget {
-  TourDetailsPage({super.key, required this.boatTour});
+  TourDetailsPage({super.key, required this.boatTrip});
 
-  final BoatTrip boatTour;
+  final BoatTrip boatTrip;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,12 @@ class TourDetailsPage extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Hero(
-                tag: '${boatTour.title}-tour-container',
+                tag: '${boatTrip.title}-tour-container',
                 transitionOnUserGestures: true,
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.75,
                   decoration: BoxDecoration(
-                      color: boatTour.cardColor,
+                      color: boatTrip.cardColor,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(40),
                           topRight: Radius.circular(40))),
@@ -50,7 +50,7 @@ class TourDetailsPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    boatTour.title,
+                                    boatTrip.title,
                                     style: GoogleFonts.mulish(
                                         color: Colors.white, fontSize: 40),
                                   ),
@@ -70,7 +70,8 @@ class TourDetailsPage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => PickDatePage(
-                                            bookingTitle: boatTour.title)))),
+                                              boatTrip: boatTrip,
+                                            )))),
                               ),
                             ],
                           ),
@@ -87,7 +88,7 @@ class TourDetailsPage extends StatelessWidget {
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.width * 0.4),
                 child: Hero(
-                  tag: '${boatTour.boatAssetName}-${boatTour.title}',
+                  tag: '${boatTrip.boatAssetName}-${boatTrip.title}',
                   transitionOnUserGestures: true,
                   child: Transform.rotate(
                     alignment: Alignment.center,

@@ -23,7 +23,7 @@ class BoatCard extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TourDetailsPage(boatTour: boatTour)),
+                    builder: (context) => TourDetailsPage(boatTrip: boatTour)),
               ),
               child: Hero(
                 tag: '${boatTour.title}-tour-container',

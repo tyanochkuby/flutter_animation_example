@@ -37,9 +37,11 @@ class BookingsPage extends StatelessWidget {
   }
 
   Widget bookingTile(Booking booking) {
-    return ListTile(
-      title: Text(booking.tripTitle),
-      subtitle: Text(booking.tripDate),
+    return GestureDetector(
+      child: ListTile(
+        title: Text(booking.tripTitle),
+        subtitle: Text(booking.tripDate),
+      ),
     );
   }
 }
