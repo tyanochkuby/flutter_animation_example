@@ -19,7 +19,7 @@ class BoatTrip {
         title: json['title'],
         cardColor: Color(int.parse(json['color'])).withOpacity(1),
         boatAssetName: 'lib/assets/${json['assetName']}.png',
-        datesAvalable: makeDateList(json['datesAvalable']));
+        datesAvalable: makeDateList(json['available_dates']));
   }
 }
 

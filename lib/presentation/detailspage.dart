@@ -5,7 +5,6 @@ import 'package:flutter_animations_example/presentation/pickdatepage.dart';
 import 'package:flutter_animations_example/presentation/widgets/heart.dart';
 import 'package:flutter_animations_example/presentation/widgets/primary_button.dart';
 import 'package:flutter_animations_example/presentation/widgets/select_quantity_pill.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/boat_trip.dart';

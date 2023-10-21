@@ -18,19 +18,20 @@ class TripsRepository {
   Future<List<BoatTrip>> get() async {
     List<BoatTrip> tripsList = [];
     try {
-      final trips =
+      final querySnapshot =
           await FirebaseFirestore.instance.collection('trips_available').get();
-
-      trips.docs.forEach((trip) {
-        tripsList.add(BoatTrip.fromJson(trip.data()));
-      });
+      final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+      for (var trip in allData) {
+        tripsList.add(BoatTrip.fromJson(trip));
+      }
 
       return tripsList;
     } on FirebaseException catch (e) {
       print('Geting failed with error ${e.message}');
       return tripsList;
     } catch (e) {
-      throw Exception(e.toString());
+      print(e.toString());
+      throw Exception(e);
     }
   }
 }
