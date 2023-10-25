@@ -13,7 +13,7 @@ class PickDatePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pick a date for ${boatTrip.title}'),
       ),
-      body: Calendar(boatTrip.datesAvalable, context),
+      body: Calendar(boatTrip: boatTrip, context: context),
     );
   }
 }

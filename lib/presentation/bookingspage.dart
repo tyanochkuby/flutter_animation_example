@@ -40,7 +40,7 @@ class BookingsPage extends StatelessWidget {
     return GestureDetector(
       child: ListTile(
         title: Text(booking.tripTitle),
-        subtitle: Text(booking.tripDate),
+        subtitle: Text(booking.tripDateTime.toString()),
       ),
     );
   }

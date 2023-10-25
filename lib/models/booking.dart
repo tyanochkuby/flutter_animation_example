@@ -5,26 +5,21 @@ import 'package:intl/intl.dart';
 
 class Booking {
   String tripTitle = 'no-title';
-  String tripDate = 'no-date';
+  DateTime tripDateTime = DateTime.fromMillisecondsSinceEpoch(0);
 
-  Booking(this.tripTitle, DateTime tripDate) {
-    this.tripDate = DateFormat('kk:mm dd-MM-yyyy').format(tripDate);
-  }
-
-  Booking.mapConstructor(this.tripTitle, this.tripDate);
+  Booking({required this.tripTitle, required this.tripDateTime});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'tripTitle': tripTitle,
-      'tripDate': tripDate,
+      'tripDateTime': DateFormat('dd-MM-yyyy kk:mm').format(tripDateTime),
     };
   }
 
   factory Booking.fromMap(Map<String, dynamic> map) {
-    return Booking.mapConstructor(
-      map['tripTitle'] as String,
-      map['tripDate'] as String,
-    );
+    return Booking(
+        tripTitle: map['tripTitle'],
+        tripDateTime: DateTime.parse(map['tripDateTime']));
   }
 
   String toJson() => json.encode(toMap());

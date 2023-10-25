@@ -3,10 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/booking.dart';
 
 class BookingsRepository {
-  final fireCloud = FirebaseFirestore.instance
-      .collection('bookings')
-      .doc(FirebaseAuth.instance.currentUser!.uid);
-
   Future<void> set(List<Booking> bookingList) async {
     final List<Map> mapedBooking = [];
     bookingList.forEach((element) {
@@ -30,16 +26,18 @@ class BookingsRepository {
   }
 
   Future<List<Booking>> get() async {
-    List<Booking> tripsList = [];
+    List<Booking> bookingsList = [];
     try {
-      final trips =
-          await FirebaseFirestore.instance.collection('trips_available').get();
+      final bookings = await FirebaseFirestore.instance
+          .collection('bookings')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
-      trips.docs.forEach((trip) {
-        tripsList.add(Booking.fromMap(trip.data()));
-      });
+      // bookings.forEach((booking) {
+      //   bookingsList.add(Booking.fromMap(booking.data()));
+      // });
 
-      return tripsList;
+      return bookingsList;
     } on FirebaseAuthException catch (e) {
       print('Auth issue ${e.message}');
       return [];

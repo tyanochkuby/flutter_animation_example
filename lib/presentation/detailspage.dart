@@ -38,13 +38,14 @@ class TourDetailsPage extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).size.height * 0.1),
-                      child: Expanded(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.25,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 40,
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -56,24 +57,24 @@ class TourDetailsPage extends StatelessWidget {
                                   const HeartWidget(),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const SelectQuantityPill(),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              PrimaryButton(
-                                text: 'Book Now',
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: ((context) => PickDatePage(
-                                              boatTrip: boatTrip,
-                                            )))),
-                              ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const SelectQuantityPill(),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            PrimaryButton(
+                              text: 'Book Now',
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: ((context) => PickDatePage(
+                                            boatTrip: boatTrip,
+                                          )))),
+                            ),
+                          ],
                         ),
                       ),
                     ),
