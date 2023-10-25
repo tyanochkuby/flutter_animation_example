@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 
-import '../../models/boattour.dart';
+import '../../models/boat_trip.dart';
 import '../detailspage.dart';
 
 class BoatCard extends StatelessWidget {
-  const BoatCard({super.key, required this.boatTour, required this.assetKey});
+  const BoatCard({super.key, required this.boatTour});
 
-  final BoatTour boatTour;
-  final GlobalKey assetKey;
+  final BoatTrip boatTour;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,7 @@ class BoatCard extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TourDetailsPage(boatTour: boatTour)),
+                    builder: (context) => TourDetailsPage(boatTrip: boatTour)),
               ),
               child: Hero(
                 tag: '${boatTour.title}-tour-container',
